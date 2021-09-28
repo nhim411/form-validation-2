@@ -2,7 +2,8 @@ const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
 //Constructor function
-function Validator(formSeletor, options = {}) {
+function Validator(formSeletor) {
+  const _this = this;
   const formRules = {};
   /**
    * Quy ước tạo rule:
@@ -103,7 +104,7 @@ function Validator(formSeletor, options = {}) {
       });
     });
     if (isValid) {
-      if (typeof options.onSubmit === "function") {
+      if (typeof _this.onSubmit === "function") {
         let enableInputs = formElement.querySelectorAll("[name]:not([disabled])");
         let formValue = Array.from(enableInputs).reduce((value, input) => {
           switch (input.type) {
@@ -132,7 +133,7 @@ function Validator(formSeletor, options = {}) {
           }
           return value;
         }, {});
-        options.onSubmit(formValue);
+        _this.onSubmit(formValue);
       } else {
         formElement.submit();
       }
